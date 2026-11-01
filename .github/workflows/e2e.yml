@@ -1,0 +1,41 @@
+name: E2E Cypress
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Evita duas execuções simultâneas da mesma branch disputando o site público
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # A action oficial instala dependências, faz cache do binário do Cypress e executa os testes
+      - name: Executar testes E2E
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+
+      - name: Publicar relatório HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-e2e
+          path: cypress/reports
+          if-no-files-found: warn
+          retention-days: 30

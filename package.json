@@ -1,0 +1,21 @@
+{
+  "name": "automation-exercise-cypress",
+  "version": "1.0.0",
+  "description": "Testes E2E do Automation Exercise com Cypress — trabalho de conclusão PGATS (Automação Web)",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "cy:open": "cypress open --e2e",
+    "test": "cypress run --browser chrome",
+    "test:electron": "cypress run"
+  },
+  "author": "Acácio Leonardo dos Santos",
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "8.4.1",
+    "cypress": "13.7.3",
+    "cypress-mochawesome-reporter": "3.8.4"
+  }
+}
